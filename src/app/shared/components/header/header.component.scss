@@ -1,0 +1,22 @@
+:host{
+
+  ::ng-deep .header{
+    margin: 30px 0px;
+    height: 100px;
+    background-color: #00825391;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo{
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    align-items: center;
+    font-size: 82px;
+  }
+}

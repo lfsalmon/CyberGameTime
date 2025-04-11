@@ -1,0 +1,90 @@
+import { Injectable } from '@angular/core';
+import { ConsoleType } from '../models/screen';
+import { DeviceInfo } from '../models/device-info';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeviceInfoService {
+
+  constructor() { }
+
+  public getInfoDevice(ipAddress:string, ScreenType:ConsoleType):DeviceInfo{
+      return <DeviceInfo> {
+        udn: '280010c0-0000-1000-8000-80cbbc225abd',
+        serialNumber: 'X01300D49N5P',
+        deviceId: 'S0AD41749N5P',
+        advertisingId: 'fdb43b62-43df-5d7f-88a6-a3c76206bd9d',
+        vendorName: 'Hisense',
+        modelName: '55U6',
+        modelNumber: 'G219X',
+        modelRegion: 'MX',
+        isTv: true,
+        isStick: false,
+        screenSize: 55,
+        panelId: "",
+        mobileHasLiveTv: true,
+        uiResolution: '1080p',
+        tunerType: 'ATSC',
+        supportsEthernet: true,
+        wifiMac: '80:cb:bc:22:5a:bd',
+        wifiDriver: 'realtek',
+        hasWifi5GSupport: true,
+        ethernetMac: 'a0:62:fb:65:6d:98',
+        networkType: 'ethernet',
+        friendlyDeviceName: '55" Hisense Roku TV',
+        friendlyModelName: 'Hisense•Roku TV',
+        defaultDeviceName: 'Hisense•Roku TV - X01300D49N5P',
+        userDeviceName: '55" Hisense Roku TV',
+        userDeviceLocation: 'Sala de estar',
+        buildNumber: 'CHF.14E07709A',
+        softwareVersion: '14.1.4',
+        lightningBaseBuildNumber: 'xxF.04E122xxA',
+        uiBuildNumber: 'CHF.14E07709A',
+        uiSoftwareVersion: '14.1.4',
+        secureDevice: true,
+        language: 'es',
+        country: 'MX',
+        locale: 'es_MX',
+        timeZoneAuto: true,
+        timeZone: 'Mexico/Central',
+        timeZoneName: 'México/Central',
+        timeZoneTz: 'America/Mexico_City',
+        timeZoneOffset: -360,
+        clockFormat: '12-hour',
+        uptime: 339440,
+        powerMode: 'Ready',
+        supportsSuspend: true,
+        supportsFindRemote: true,
+        findRemoteIsPossible: false,
+        supportsAudioGuide: false,
+        supportsRva: true,
+        hasHandsFreeVoiceRemote: false,
+        developerEnabled: false,
+        keyedDeveloperId: '',
+        deviceAutomationBridgeEnabled: false,
+        searchEnabled: true,
+        searchChannelsEnabled: true,
+        voiceSearchEnabled: true,
+        supportsPrivateListening: true,
+        supportsPrivateListeningDtv: true,
+        supportsWarmStandby: true,
+        headphonesConnected: false,
+        supportsAudioSettings: false,
+        expertPqEnabled: 1.0,
+        supportsEcsTextedit: true,
+        supportsEcsMicrophone: true,
+        supportsWakeOnWlan: true,
+        supportsAirplay: true,
+        hasPlayOnRoku: true,
+        hasMobileScreensaver: false,
+        supportUrl: 'http://www.hisense.com.mx/support/',
+        grandcentralVersion: '13.5.11',
+        supportsTrc: true,
+        trcVersion: '3.0',
+        trcChannelVersion: '12.5.18',
+        avSyncCalibrationEnabled: 3.0,
+      };
+  }
+
+}

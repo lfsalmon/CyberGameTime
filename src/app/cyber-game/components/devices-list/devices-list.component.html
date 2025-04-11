@@ -1,0 +1,96 @@
+<p-toast></p-toast>
+
+
+<div class="flex mb-4 gap-2 justify-end btn-with-image">
+  <p-button
+    *ngFor="let console of ConsoleTypes; let i = index"
+    (onClick)="active = i.toString()"
+    [rounded]="true"
+    class="w-8 h-8 p-0"
+    [outlined]="active !== i.toString()">
+    <img [src]="getImage(console.value)" [alt]="console.label" />
+  </p-button>
+</div>
+
+<p-accordion [(value)]="active">
+  <p-accordion-panel *ngFor="let console of ConsoleTypes; let i = index" [value]="i.toString()">
+    <p-accordion-header>
+
+    <span>
+      {{ console.label }}
+      <p-badge [value]="getVAlues(console.value).length" />
+    </span>
+
+    </p-accordion-header>
+    <p-accordion-content>
+      <div class="card">
+        <p-dataview #dv [value]="getVAlues(console.value)" [layout]="'grid'">
+          <ng-template #grid let-items>
+            <div class="grid grid-cols-12 gap-4">
+              <div *ngFor="let product of items" class="col-span-12 sm:col-span-4 md:col-span-2 xl:col-span-4 p-5">
+                <div class="p-3 border rounded flex flex-col">
+                  <p-menubar   [model]="product.menu" >
+
+                    <ng-template #item let-itemsMenu let-root="root">
+                      <a *ngIf="itemsMenu.label!='Power On' && itemsMenu.label!='Power Off'" pRipple class="flex items-center p-menubar-item-link">
+                        <i  [ngClass]="itemsMenu.icon" class="mr-2"></i>
+                      </a>
+                    </ng-template>
+
+                    <ng-template #end>
+                        <div class="flex items-center gap-2">
+                            <a class="flex items-center p-menubar-item-link power-on" (click)="PowerOn(product.ipAddres)"><i ngClass="pi pi-power-off"></i>
+                            </a>
+                            <a class="flex items-center p-menubar-item-link power-off" (click)="PowerOff(product.ipAddres)"><i ngClass="pi pi-power-off"></i>
+                            </a>
+                        </div>
+                    </ng-template>
+                  </p-menubar>
+
+                  <div class="bg-surface-50 flex justify-center rounded p-4">
+                    <div class="relative mx-auto">
+                      <img class="rounded w-full" [src]="getImage(product.consoleType)" [alt]="product.name" style="max-width: 300px"/>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row justify-center gap-2">
+                    <div class="text-lg font-medium mt-1">
+                      <b>{{ product.name }}</b> ({{product.ipAddres}})
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row justify-center gap-2">
+                    <div class="text-lg font-medium mt-1">
+                      <span *ngIf="product.rentalScrean else notime">
+                        {{product.rentalScrean.startDate.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) }} - {{product.rentalScrean.endDate.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) }}
+
+                      </span>
+                      <ng-template #notime>
+                        <span>Sin horario asignado</span>
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-6 mt-6" *ngIf="!product.rentalScrean else bottonsnotime">
+                    <div class="flex gap-2">
+                      <button pButton icon="pi pi-stopwatch"  (click)="AddTime(product)" [disabled]="false" class="flex-auto whitespace-nowrap"></button>
+                    </div>
+                  </div>
+                  <ng-template #bottonsnotime>
+                    <div class="flex flex-col gap-6 mt-6">
+                      <div class="flex gap-2">
+                        <button pButton icon="pi pi-stop"  (click)="updateTime(product.rentalScrean)" [disabled]="false" class="flex-auto whitespace-nowrap stop-button"></button>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataview>
+      </div>
+    </p-accordion-content>
+  </p-accordion-panel>
+</p-accordion>
+
+

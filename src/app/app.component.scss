@@ -1,0 +1,61 @@
+:host{
+  ::ng-deep .p-dock-list-container {
+    background: rgb(33 33 33 / 10%) !important;
+  }
+
+  ::ng-deep .p-dock-item{
+    padding: 0px;
+  }
+
+  ::ng-deep .dock-window {
+    width: 100%;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  ::ng-deep .p-dock {
+    z-index: 1000;
+  }
+
+  ::ng-deep .dock-window {
+    position: relative;
+  }
+
+  ::ng-deep .dock-item {
+    transition: transform 4.3s ease, opacity 0.3s ease;
+  }
+
+  ::ng-deep .dock-item img {
+    width: 100%;
+    transition: transform 0.3s ease;
+    transform: scale(0.6);
+  }
+
+  ::ng-deep .dock-item:hover img {
+    transform: scale(1.0);
+
+
+  }
+
+  ::ng-deep .dock-item:hover {
+    opacity: 1;
+    z-index: 10;
+  }
+
+  ::ng-deep .fixed-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+
+  }
+
+
+
+
+
+}

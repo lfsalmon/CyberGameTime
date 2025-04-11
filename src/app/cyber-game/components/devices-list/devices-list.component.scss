@@ -1,0 +1,77 @@
+:host{
+
+  ::ng-deep .btn-with-image{
+    .p-ripple{
+      padding: 0px !important;
+    }
+
+  }
+  .stop-button{
+    border-color: red;
+  }
+
+  ::ng-deep .power-off {
+    color: red !important;
+  }
+
+  ::ng-deep .power-off:hover,
+  ::ng-deep .power-on:hover {
+    background-color: #27272a;
+  }
+  ::ng-deep  .power-on {
+    color: green !important;
+
+  }
+
+  ::ng-deep .p-menubar.p-component {
+    border: none !important;
+    border-radius: 0px !important;
+    padding: 0px;
+  }
+
+  ::ng-deep .p-menubar-item-icon{
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+
+  ::ng-deep  .p-button.p-component.p-button-icon-only{
+    width: fit-content;
+    background: transparent;
+    color: white;
+    padding: 5px;
+  }
+
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .btn-with-image {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+
+
+
+}
+
