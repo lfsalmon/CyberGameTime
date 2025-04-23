@@ -20,6 +20,7 @@ import { RentalDevice } from '../../models/rental-device';
 import { RentalScreenService } from '../../services/rental-screen.service';
 
 import * as signalR from '@microsoft/signalr';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-devices-list',
   standalone: true,
@@ -71,7 +72,7 @@ export class DevicesListComponent {
 
   public startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl('https://localhost:44365/messageHub', {
+    .withUrl(`${environment.apiUrl}/messageHub`, {
       withCredentials: true
     })
     .withAutomaticReconnect()
