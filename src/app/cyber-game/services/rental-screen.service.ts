@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {RentalDevice} from '../models/rental-device'
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RentalScreenService {
 
-  private apiUrl = 'https://localhost:44365/api/RentalScreend';
+  private apiUrl = `${environment.apiUrl}/RentalScreend`;
 
   constructor(private _http: HttpClient) {}
 
