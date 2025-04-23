@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ScreenService {
-  private apiUrl = `${environment.apiUrl}/Screens`;
+  private apiUrl = `${environment.apiUrl}api/Screens`;
 
   constructor(private _http: HttpClient) {}
 
