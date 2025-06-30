@@ -72,7 +72,7 @@ export class DevicesListComponent {
 
   public startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl(`${environment.apiUrl}/messageHub`, {
+    .withUrl(`${environment.apiUrl}messageHub`, {
       withCredentials: true
     })
     .withAutomaticReconnect()
@@ -92,7 +92,6 @@ export class DevicesListComponent {
 
   public AddTime(_screed:Screen)
   {
-
     let _title=`Agregar Tiempo de uso para consola ${_screed.name}`;
     this.visibleDialog=true;
     this.ref = this.dialogService.open(RentalDeviceComponent, {
@@ -111,10 +110,13 @@ export class DevicesListComponent {
   this.ref.onClose.subscribe((rentalData:RentalDevice) => {
     if(rentalData){
       rentalData.screenId=_screed.id;
+      
       this._rentalService.Create(rentalData).subscribe((success)=>{
         let _message=`se agrego tiempo en la consola ${_screed?.name} desde ${rentalData.startDate} hasta ${rentalData.endDate}`;
         this.messageService.add({ severity: 'info', summary: 'Success', detail:_message, life: 3000 });
-      })
+      });
+      
+      this.createDeviceMenu();
     }
   });
   }
