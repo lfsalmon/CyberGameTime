@@ -39,9 +39,9 @@
 
                     <ng-template #end>
                         <div class="flex items-center gap-2">
-                            <a class="flex items-center p-menubar-item-link power-on" (click)="PowerOn(product.ipAddres)"><i ngClass="pi pi-power-off"></i>
+                            <a class="flex items-center p-menubar-item-link power-on" (click)="PowerOn(product.id)"><i ngClass="pi pi-power-off"></i>
                             </a>
-                            <a class="flex items-center p-menubar-item-link power-off" (click)="PowerOff(product.ipAddres)"><i ngClass="pi pi-power-off"></i>
+                            <a class="flex items-center p-menubar-item-link power-off" (click)="PowerOff(product.id)"><i ngClass="pi pi-power-off"></i>
                             </a>
                         </div>
                     </ng-template>
@@ -79,7 +79,7 @@
                   <ng-template #bottonsnotime>
                     <div class="flex flex-col gap-6 mt-6">
                       <div class="flex gap-2">
-                        <button pButton icon="pi pi-stop"  (click)="updateTime(product.rentalScrean)" [disabled]="false" class="flex-auto whitespace-nowrap stop-button"></button>
+                        <button pButton icon="pi pi-stop"  (click)="updateTime(product)" [disabled]="false" class="flex-auto whitespace-nowrap stop-button"></button>
                       </div>
                     </div>
                   </ng-template>

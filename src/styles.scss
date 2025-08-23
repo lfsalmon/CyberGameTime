@@ -1,3 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
+
+/* Force dark mode styles */
+html.dark {
+  background-color: #0f1419;
+  color: #ffffff;
+}
+
+html.dark body {
+  background-color: #0f1419;
+  color: #ffffff;
+}
+
+/* Additional dark mode overrides if needed */
+html.dark .main {
+  background-color: #0f1419;
+}
+
+html.dark .content {
+  background-color: #0f1419;
+}
+
+html.dark .card {
+  background-color: #1a1e23;
+}

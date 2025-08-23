@@ -41,8 +41,8 @@ export class ScreenService {
     return this._http.get<DeviceInfo>(`${this.apiUrl}/Roku/PowerOff/${ipAddress}`);
   }
 
-  PowerOn(ipAddress: string): Observable<DeviceInfo> {
-    return this._http.get<DeviceInfo>(`${this.apiUrl}/Roku/PowerOn/${ipAddress}`);
+  PowerOn(id: number): Observable<DeviceInfo> {
+    return this._http.get<DeviceInfo>(`${this.apiUrl}/Roku/PowerOn/${id}`);
   }
 }
 

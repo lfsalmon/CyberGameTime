@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ScreenService } from '../../services/screen.service';
 import { ConsoleType, ConsoleTypeLabels, Screen,ScreenStatus,ScreenStatusLabels } from '../../models/screen';
 import { DataView } from 'primeng/dataview';
@@ -38,7 +38,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './devices-list.component.html',
   styleUrl: './devices-list.component.scss'
 })
-export class DevicesListComponent {
+export class DevicesListComponent implements OnDestroy {
   private hubConnection: signalR.HubConnection | undefined;
 
   public devices_Xbox:any[]=[];
@@ -87,6 +87,18 @@ export class DevicesListComponent {
       this.createDeviceMenu();
       this.messageService.add({ severity: 'info', summary: 'Success', detail:`Se mando apagar la pantalla ${screenName}`, life: 3000 });
     });
+
+    // Agregar listener para cuando se actualice el tiempo
+    this.hubConnection.on('TimeUpdated', (screenName: string) => {
+      this.createDeviceMenu();
+      this.messageService.add({ severity: 'info', summary: 'Tiempo Actualizado', detail:`Se actualizó el tiempo para ${screenName}`, life: 3000 });
+    });
+
+    // Agregar listener para cuando se agregue tiempo
+    this.hubConnection.on('TimeAdded', (screenName: string) => {
+      this.createDeviceMenu();
+      this.messageService.add({ severity: 'info', summary: 'Tiempo Agregado', detail:`Se agregó tiempo para ${screenName}`, life: 3000 });
+    });
   }
 
 
@@ -114,9 +126,13 @@ export class DevicesListComponent {
       this._rentalService.Create(rentalData).subscribe((success)=>{
         let _message=`se agrego tiempo en la consola ${_screed?.name} desde ${rentalData.startDate} hasta ${rentalData.endDate}`;
         this.messageService.add({ severity: 'info', summary: 'Success', detail:_message, life: 3000 });
+        
+        // Actualizar la lista de dispositivos después de agregar tiempo
+        this.createDeviceMenu();
+      },
+      (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al agregar tiempo', life: 3000 });
       });
-      
-      this.createDeviceMenu();
     }
   });
   }
@@ -152,6 +168,9 @@ export class DevicesListComponent {
   public PowerOff(IpAddress:string){
    this._service.PowerOff(IpAddress).subscribe((sucess)=>{
     this.messageService.add({ severity: 'success', summary: 'success', detail: `La conosla con Ip ${IpAddress} fue apagada correctamente`, life: 3000 });
+    
+    // Actualizar la lista de dispositivos después de apagar
+    this.createDeviceMenu();
    },
    (error)=>{
     this.messageService.add({ severity: 'error', summary: 'Error', detail: `hubo error en la conosla con Ip ${IpAddress} al intetnar apagar`, life: 3000 });
@@ -159,12 +178,15 @@ export class DevicesListComponent {
   )
   }
 
-  public PowerOn(IpAddress:string){
-    this._service.PowerOn(IpAddress).subscribe((sucess)=>{
-      this.messageService.add({ severity: 'success', summary: 'success', detail: `La conosla con Ip ${IpAddress} fue prendida correctamente`, life: 3000 });
+  public PowerOn(id:number){
+    this._service.PowerOn(id).subscribe((sucess)=>{
+      this.messageService.add({ severity: 'success', summary: 'success', detail: `La conosla con Id ${id} fue prendida correctamente`, life: 3000 });
+      
+      // Actualizar la lista de dispositivos después de encender
+      this.createDeviceMenu();
      },
      (error)=>{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: `hubo error en la conosla con Ip ${IpAddress} al intetnar prender`, life: 3000 });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: `hubo error en la conosla con Id ${id} al intetnar prender`, life: 3000 });
      }
     )
   }
@@ -257,8 +279,39 @@ export class DevicesListComponent {
     }
   }
 
-  public updateTime(rental:RentalDevice){
-    console.log("cambio el tiempo "+rental.id)
+  public updateTime(_screed:Screen){
+
+    if(_screed.rentalScrean){
+      this._rentalService.Update(_screed.rentalScrean).subscribe((success)=>{
+        let _message=`Se finalizo el tiempo de la consola ${_screed?.name} se apagara en unos instantes `;
+        this.messageService.add({ severity: 'info', summary: 'Success', detail:_message, life: 3000 });
+        
+        // Actualizar la lista de dispositivos después de actualizar tiempo
+        this.createDeviceMenu();
+      },
+      (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al actualizar tiempo', life: 3000 });
+      });
+    }
+    else{
+      let _message=`El dispositivo ${_screed?.name} no tiene tiempo para finalizar`;
+        this.messageService.add({ severity: 'info', summary: 'Info', detail:_message, life: 3000 });
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    // Cerrar la conexión SignalR cuando el componente se destruya
+    if (this.hubConnection) {
+      this.hubConnection.stop()
+        .then(() => console.log('Conexión SignalR cerrada'))
+        .catch(err => console.error('Error al cerrar la conexión SignalR', err));
+    }
+    
+    // Cerrar el diálogo si está abierto
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
 }

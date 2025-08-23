@@ -1,11 +1,11 @@
 
 import { RouterOutlet } from '@angular/router';
 import { DevicesListComponent } from './cyber-game/components/devices-list/devices-list.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Dock } from 'primeng/dock';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
@@ -19,14 +19,21 @@ import { DeviceComponent } from './cyber-game/components/device/device.component
   styleUrl: './app.component.scss',
   providers: [MessageService,DialogService],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy{
   title = 'CyberGameTime';
   items: MenuItem[] | undefined;
   ref: DynamicDialogRef | undefined;
 
-  constructor(public dialogService: DialogService, public messageService: MessageService) {}
+  constructor(
+    public dialogService: DialogService, 
+    public messageService: MessageService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit() {
+    // Force dark mode on application start
+    this.document.documentElement.classList.add('dark');
+    
     this.items = [
         {
             label: 'Consolas',

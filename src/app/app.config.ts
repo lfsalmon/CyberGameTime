@@ -13,7 +13,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     providePrimeNG({
       theme:{
-        preset:Aura
+        preset: Aura,
+        options: {
+          darkModeSelector: '.dark',
+          cssLayer: false
+        }
       }
     }),
     provideAnimations()

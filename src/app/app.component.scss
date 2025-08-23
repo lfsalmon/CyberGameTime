@@ -49,13 +49,14 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background-color: rgba(255, 255, 255, 0.9);
-      box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+      background-color: rgba(26, 30, 35, 0.9); // Dark background
+      box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.4);
 
   }
 
-
-
-
-
+  // Light mode override (just in case)
+  :host:not(.dark) ::ng-deep .fixed-dock {
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+  }
 }
