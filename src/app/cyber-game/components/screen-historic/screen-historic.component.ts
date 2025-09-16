@@ -22,9 +22,11 @@ export class ScreenHistoricComponent implements OnInit {
   
   ngOnInit(): void {
     // rango: hoy 00:00 hasta hoy 23:59 (local), enviar en UTC (ISO)
-    const start = new Date(2025, 8, 15);
+    //const start = new Date(2025, 8, 15);
+    const start = new Date();
     start.setHours(0, 0, 0, 0);
-    const end = new Date(2025, 8, 15);
+    const end = new Date();
+    //const end = new Date(2025, 8, 15);
     end.setHours(23, 59, 0, 0);
     var _selected = this.config.data?.screen;
     let screenid=null;
