@@ -1,5 +1,7 @@
 export class HistoricScreen {
-  public DeviceId:number=0;
-  public StartDate:Date= new Date();
-  public HourCount:number=0;
+  
+  public screenId: number = 0;
+  public status: string = '';
+  public startDate: string = new Date().toISOString();
+  public endDate: string = new Date().toISOString();
 }

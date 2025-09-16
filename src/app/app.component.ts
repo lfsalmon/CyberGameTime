@@ -11,6 +11,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { DeviceComponent } from './cyber-game/components/device/device.component';
+import { ReportScreensComponent } from './cyber-game/components/report-screens/report-screens.component';
 
 @Component({
   selector: 'app-root',
@@ -47,12 +48,13 @@ export class AppComponent implements OnInit, OnDestroy{
         },
         {
             label: 'Linea de tiempo de consolas',
-            icon: 'https://static.vecteezy.com/system/resources/previews/009/826/881/non_2x/eight-o-clock-time-sign-design-icon-free-png.png'
+            icon: 'https://static.vecteezy.com/system/resources/thumbnails/021/950/979/small_2x/3d-file-report-icon-illustration-png.png',
+               command: () => this.ReportComponent()
         }
     ];
   }
 
-  AddDeviceComponent() {
+    AddDeviceComponent() {
     this.ref = this.dialogService.open(DeviceComponent, {
         header: 'Agregar consola',
         width: '50vw',
@@ -66,11 +68,27 @@ export class AppComponent implements OnInit, OnDestroy{
         }
     });
 
-}
-
-ngOnDestroy() {
-    if (this.ref) {
-        this.ref.close();
     }
-}
+
+    ReportComponent() {
+        this.ref = this.dialogService.open(ReportScreensComponent, {
+            header: 'Reporte de Consolas',
+            width: '50vw',
+            modal: true,
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            closable:true,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            }
+        });
+
+    }
+
+    ngOnDestroy() {
+        if (this.ref) {
+            this.ref.close();
+        }
+    }
 }

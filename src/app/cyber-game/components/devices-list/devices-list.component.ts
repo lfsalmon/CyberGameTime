@@ -21,6 +21,7 @@ import { RentalScreenService } from '../../services/rental-screen.service';
 
 import * as signalR from '@microsoft/signalr';
 import { environment } from '../../../../environments/environment';
+import { ScreenHistoricComponent } from '../screen-historic/screen-historic.component';
 @Component({
   selector: 'app-devices-list',
   standalone: true,
@@ -41,11 +42,12 @@ import { environment } from '../../../../environments/environment';
 export class DevicesListComponent implements OnDestroy {
   private hubConnection: signalR.HubConnection | undefined;
 
-  public devices_Xbox:any[]=[];
-  public devices_Ps:any[]=[];
-  public devices_Nintendo:any[]=[];
+  public devices:any[]=[];
+  // public devices_Xbox:any[]=[];
+  // public devices_Ps:any[]=[];
+  // public devices_Nintendo:any[]=[];
   public visibleDialog=false;
-  public devices_Unknow:any[]=[];
+  // public devices_Unknow:any[]=[];
 
   public itemMenu: MenuItem[] | undefined;
   public activeIndex: number | undefined = 0;
@@ -155,10 +157,10 @@ export class DevicesListComponent implements OnDestroy {
           x.rentalScrean.startDate= new Date(x.rentalScrean.startDate)
         }
       })
-      this.devices_Xbox=this.createDevices(ConsoleType.Xbox,_screens);
-      this.devices_Ps=this.createDevices(ConsoleType.Ps4,_screens);
-      this.devices_Nintendo=this.createDevices(ConsoleType.Nintendo,_screens);
-      this.devices_Unknow=this.createDevices(ConsoleType.Unknow,_screens);
+      this.devices=this.createDevices(_screens);
+      // this.devices_Ps=this.createDevices(ConsoleType.Ps4,_screens);
+      // this.devices_Nintendo=this.createDevices(ConsoleType.Nintendo,_screens);
+      // this.devices_Unknow=this.createDevices(ConsoleType.Unknow,_screens);
 
     });;
 
@@ -213,10 +215,34 @@ export class DevicesListComponent implements OnDestroy {
     });
   }
 
-  public createDevices(type:ConsoleType,_screen:Screen[]):Screen[]{
 
-    let _filters=_screen.filter(x=>x.consoleType==type);
-    return  _filters.map(device => ({
+  public TimeLineAction(screen:Screen){
+      this.ref = this.dialogService.open(ScreenHistoricComponent, {
+        header: 'Time Line of '+ screen.name,
+        width: '50vw',
+        modal: true,
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        closable:true,
+        data: {
+          screen:screen
+        },
+        breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+        }
+    });
+
+    this.ref.onClose.subscribe((product) => {
+      this.createDeviceMenu();
+    });
+  }
+
+  public createDevices(_screen:Screen[]):Screen[]{
+
+    //let _filters=_screen.filter(x=>x.consoleType==type);
+
+    return  _screen.map(device => ({
       ...device,
       menu: [
         {
@@ -228,7 +254,7 @@ export class DevicesListComponent implements OnDestroy {
         {
           label: 'Time Line',
           icon: 'pi pi-history',
-          command: () => this.handleEvent(device.name, 'Time Line')
+          command: () => this.TimeLineAction(device)
         },
         {
           label: 'Power On',
@@ -264,20 +290,20 @@ export class DevicesListComponent implements OnDestroy {
     return ScreenStatusLabels[status];
   }
 
-  public getVAlues(type:ConsoleType):Screen[]{
-    switch (type) {
-      case ConsoleType.Xbox:
-        return this.devices_Xbox;
-      case ConsoleType.Ps4:
-        return this.devices_Ps;
-      case ConsoleType.Nintendo:
-        return this.devices_Nintendo;
-      case ConsoleType.Unknow:
-        return this.devices_Unknow;
-      default:
-        return [];
-    }
-  }
+  // public getVAlues(type:ConsoleType):Screen[]{
+  //   switch (type) {
+  //     case ConsoleType.Xbox:
+  //       return this.devices_Xbox;
+  //     case ConsoleType.Ps4:
+  //       return this.devices_Ps;
+  //     case ConsoleType.Nintendo:
+  //       return this.devices_Nintendo;
+  //     case ConsoleType.Unknow:
+  //       return this.devices_Unknow;
+  //     default:
+  //       return [];
+  //   }
+  // }
 
   public updateTime(_screed:Screen){
 
